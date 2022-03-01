@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-<img src="https://i.ibb.co/jJBpCkF/Logo-removebg.png" alt="">
+<img src="https://i.ibb.co/jJBpCkF/Logo-removebg.png">
   </div>
 </template>
 
