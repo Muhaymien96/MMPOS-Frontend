@@ -1,40 +1,48 @@
 <template>
+<section class="register">
   <form @submit.prevent="register" class="form">
     <h2 class="form-heading">Register</h2>
     <input
-      class="form-input neu-border-inset"
+      class="form-input border-inset"
       type="text"
       v-model="name"
       placeholder="Name"
       required
     />
     <input
-      class="form-input neu-border-inset"
+      class="form-input border-inset"
       type="email"
       v-model="email"
       placeholder="Email"
       required
     />
     <input
-      class="form-input neu-border-inset"
+      class="form-input border-inset"
       type="text"
       v-model="contact"
       placeholder="Contact Number"
       required
     />
     <input
-      class="form-input neu-border-inset"
+      class="form-input border-inset"
       type="password"
       v-model="password"
       placeholder="Password"
       required
     />
-    <button type="submit" class="form-btn neu-border">Sign up</button>
+    <div class="row">
+      <div class="col-sm-5">
+    <button type="submit" class="form-btn">Sign up</button>
+      </div>
+      <div class="col-sm-7">
     <p>
       Already a member?
-      <router-link :to="{ name: 'Login' }">Sign in</router-link>
+      <a href="/login">Sign in</a>
     </p>
+      </div>
+    </div>
   </form>
+  </section>
 </template>
 <script>
 export default {
@@ -73,16 +81,13 @@ export default {
   },
 };
 </script>
-<style>
-.neu-border {
-  border-radius: 30px;
+<style scoped>
+.border {
+  border-radius: 20px;
   background: #f5f5f5;
-  box-shadow: 8px 8px 15px #e4e4e4, -8px -8px 15px #ffffff;
 }
-.neu-border-inset {
-  border-radius: 30px;
-  background: #f5f5f5;
-  box-shadow: inset 8px 8px 15px #e4e4e4, inset -8px -8px 15px #ffffff;
+.border-inset {
+  border-bottom: 1px solid #000 !important;
 }
 
 .form {
@@ -93,6 +98,7 @@ export default {
   gap: 20px;
   width: 100%;
   max-width: 600px;
+  margin-top: 25px;
   margin-inline: auto;
 }
 
@@ -101,20 +107,37 @@ export default {
   text-transform: uppercase;
 }
 
-.form-input,
-.form-btn {
+.col-sm-7 p {
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+
+.col-sm-7 a {
+  color: #f8ad9d !important;
+  transition: 00.2s;
+}
+.col-sm-7 a:hover {
+  color: #333 !important;
+  transition: 00.2s;
+}
+
+.form-input {
   border: none;
   outline: none;
   padding: 20px;
 }
 
 .form-btn {
+  background: #f8ad9d;
   cursor: pointer;
   transition: all 0.1s linear;
+  padding: 10px;
+  border: none;
+  float: left;
 }
 
 .form-btn:hover {
-  transform: scale(1.05);
+  background: #f4978e;
 }
 
 .form-social-login {

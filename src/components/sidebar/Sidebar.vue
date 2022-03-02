@@ -18,15 +18,17 @@ export default {
         <div>L</div>
         <div>C</div>
       </span>
-      <span v-else>LC Boutique</span>
+      <span v-else><img src="https://i.ibb.co/jJBpCkF/Logo-removebg.png" class="side-img">
+</span>
     </h1>
-
-    <SidebarLink class="navi" to="/home" icon="fas fa-home">Home</SidebarLink>
+    <div class="navBar mt-5">
+    <SidebarLink class="navi" to="/" icon="fas fa-home">Home</SidebarLink>
     <SidebarLink class="navi" to="/products" icon="fas fa-shopping-cart">Products</SidebarLink>
-    <SidebarLink class="navi" to="/profile" icon="fas fa-users">Profile</SidebarLink>
-    <SidebarLink class="navi" to="/register" icon="fas fa-image">Register</SidebarLink>
-    <SidebarLink class="navi" to="/" icon="fas fa-sign-in-alt">Login</SidebarLink>
+    <SidebarLink class="navi" to="/profile" icon="fas fa-user">Profile</SidebarLink>
+    <SidebarLink class="navi" to="/register" icon="fas fa-address-card">Register</SidebarLink>
+    <SidebarLink class="navi" to="/login" icon="fas fa-sign-in-alt">Login</SidebarLink>
     <SidebarLink class="navi" @click="logout" :to="{ name: 'Login' }" icon="fas fa-sign-out-alt">Log out</SidebarLink>
+    </div>
 
     <span
       class="collapse-icon"
@@ -40,9 +42,9 @@ export default {
 
 <style>
 :root {
-  --sidebar-bg-color: #2f855a;
-  --sidebar-item-hover: #38a169;
-  --sidebar-item-active: #276749;
+  --sidebar-bg-color: #f8ad9d;
+  --sidebar-item-hover: #f4978e;
+  --sidebar-item-active: #f4978e;
 }
 </style>
 
@@ -50,7 +52,6 @@ export default {
 .sidebar {
   color: white;
   background-color: var(--sidebar-bg-color);
-
   float: left;
   position: fixed;
   z-index: 1;
@@ -72,6 +73,10 @@ margin-top: 20px !important;
   height: 2.5em;
 }
 
+.side-img {
+  width: 135px;
+}
+
 .collapse-icon {
   position: absolute;
   bottom: 0;
@@ -85,5 +90,10 @@ margin-top: 20px !important;
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;
+}
+@media (max-width:400px) {
+  .collapse-icon {
+    display: none !important;
+  }
 }
 </style>

@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-
+import Cart from "../views/Cart.vue"
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "Home",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Home.vue")
+    component: Home
   },
   {
-    path: "/",
+    path: "/cart",
+    name: "Cart",
+    component: Cart
+  },
+ {
+    path: "/login",
     name: "Login",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -23,50 +24,29 @@ const routes = [
   {
     path: "/cart",
     name: "Cart",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Cart.vue")
   },
   {
     path: "/register",
     name: "Register",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Register.vue"),
   },
   {
     path: "/profile",
     name: "Profile",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Profile.vue"),
   },
   {
     path: "/products",
     name: "Products",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import("../views/Products.vue"),
     props: true,
   },
-  {
-    path: "/products/create",
-    name: "AddProduct",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/CreateBlog.vue"),
-    props: true,
-  },
+ 
 ];
 
 const router = createRouter({

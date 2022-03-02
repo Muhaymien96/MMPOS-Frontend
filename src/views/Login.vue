@@ -1,39 +1,30 @@
 <template>
-  <div class="container">
+  <form @submit.prevent="login" class="form mt-5">
+    <h2 class="form-heading">Login</h2>
+    <input
+      class="form-input border-inset"
+      type="email"
+      v-model="email"
+      placeholder="Email"
+    />
+    <input
+      class="form-input border-inset"
+      type="password"
+      v-model="password"
+      placeholder="Password"
+    />
     <div class="row">
-      <div class="col-lg-3 col-md-2"></div>
-      <div class="col-lg-6 col-md-8 login-box">
-          <img class = "logo" src="https://i.ibb.co/jJBpCkF/Logo-removebg.png">
-        <div class="col-lg-12 login-title">LC BOUTIQUE</div>
-        <div class="col-lg-12 login-form">
-          <div class="col-lg-12 login-form">
-            <form @submit.prevent="login">
-              <div class="form-group">
-                <label class="form-control-label">EMAIL</label>
-                <input type="text" v-model="email" class="form-control" autocomplete="off"/>
-              </div>
-              <div class="form-group">
-                <label class="form-control-label">PASSWORD</label>
-                <input type="password" v-model="password" class="form-control" autocomplete="off" />
-              </div>
-
-              <div class="col-lg-12 loginbttm">
-                <div class="col-lg-6 login-btm login-text">
-                  <!-- Error Message -->
-                </div>
-                <div class="login-btn login-button">
-                  <button type="submit" class="btn btn-outline-primary">
-                    LOGIN
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-2"></div>
+      <div class="col-sm-5">
+    <button type="submit" class="form-btn">Sign in</button>
+      </div>
+      <div class="col-sm-7">
+    <p>
+      Not a member?
+      <a href="/register">Create an account</a>
+    </p>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 <script>
 export default {
@@ -58,6 +49,7 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
+          console.log(json)
           localStorage.setItem("jwt", json.jwt);
           alert("User logged in");
           this.$router.push({ name: "Home" });
@@ -70,128 +62,69 @@ export default {
 };
 </script>
 <style scoped>
-.container {
-  width: 110vw;
-  height: 100vh;
-    background: #222D32;
-    font-family: 'Roboto', sans-serif;
+.border {
+  border-radius: 20px;
+  background: #f5f5f5;
 }
-.logo{
-  height: 120px !important;
-  width: 120px !important;
-}
-.login-box {
-
-    margin-top: 75px;
-    height: auto;
-    background: #1A2226;
-    text-align: center;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+.border-inset {
+  border-bottom: 1px solid #000 !important;
 }
 
-.login-title {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 30px;
-    letter-spacing: 2px;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #ECF0F5;
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  gap: 20px;
+  width: 100%;
+  margin-inline: auto;
+  max-width: 600px;
 }
 
-.login-form {
-    margin-top: 25px;
-    text-align: left;
+.form-heading {
+  text-align: center;
+  text-transform: uppercase;
 }
 
-input[type=text] {
-    background-color: #1A2226;
-    border: none;
-    border-bottom: 2px solid #0DB8DE;
-    border-top: 0px;
-    border-radius: 0px;
-    font-weight: bold;
-    outline: 0;
-    margin-bottom: 20px;
-    padding-left: 0px;
-    color: #ECF0F5;
+.form-input {
+  border: none;
+  outline: none;
+  padding: 20px;
 }
 
-input[type=password] {
-    background-color: #1A2226;
-    border: none;
-    border-bottom: 2px solid #0DB8DE;
-    border-top: 0px;
-    border-radius: 0px;
-    font-weight: bold;
-    outline: 0;
-    padding-left: 0px;
-    margin-bottom: 20px;
-    color: #ECF0F5;
+.form-btn {
+  cursor: pointer;
+  transition: all 0.1s linear;
+  padding: 10px;
+  border: none;
+  background: #f8ad9d;
+  float: left;
+}
+.form-btn:hover {
+  background: #f4978e;
+}
+.col-sm-7 p {
+  font-size: 1.1rem;
+  margin-top: 20px;
 }
 
-.form-group {
-    margin-bottom: 40px;
-    outline: 0px;
+.col-sm-7 a {
+  color: #f8ad9d !important;
+  transition: 00.2s;
+}
+.col-sm-7 a:hover {
+  color: #333 !important;
+  transition: 00.2s;
 }
 
-.form-control:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-bottom: 2px solid #0DB8DE;
-    outline: 0;
-    background-color: #1A2226;
-    color: #ECF0F5;
+
+.form-social-login {
+  display: flex;
+  justify-content: space-between;
 }
 
-input:focus {
-    outline: none;
-    box-shadow: 0 0 0;
-}
-
-label {
-    margin-bottom: 0px;
-}
-
-.form-control-label {
-    font-size: 10px;
-    color: #6C6C6C;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.btn-outline-primary {
-    border-color: #0DB8DE;
-    color: #0DB8DE;
-    border-radius: 0px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.btn-outline-primary:hover {
-    background-color: #0DB8DE;
-    right: 0px;
-}
-
-.login-btm {
-    float: left;
-}
-
-.login-button {
-    padding-right: 0px;
-    text-align: right;
-    margin-bottom: 25px;
-}
-
-.login-text {
-    text-align: left;
-    padding-left: 0px;
-    color: #A2A4A4;
-}
-
-.loginbttm {
-    padding: 0px;
+.form-social-btn {
+  width: 45%;
+  color: #333;
 }
 </style>
