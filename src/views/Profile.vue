@@ -1,7 +1,7 @@
 <template>
   <section class="section_3">
+    <h2 class="testimonial text-dark pt-3">User Profile</h2>
     <div class="container">
-      <h2 class="testimonial text-dark pt-3">User Profile</h2>
       <br /><br />
       <div class="row">
         <div class="member member-box col-md-4 col=sm-6 col-xs-12" v-if="users">
@@ -10,18 +10,20 @@
             src="https://i.ibb.co/ZTGw6QB/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
           />
           <br />
-          <h2 class="name-member name mt-2 text-dark">Name: {{ users.fullname }}</h2>
+          <h2 class="name-member name mt-2 text-dark">
+            Name: {{ users.fullname }}
+          </h2>
           <br />
           <h2 class="expertise-member expertise text-dark">
             Email: {{ users.email }}
           </h2>
           <br />
           <h2 class="expertise-member expertise text-dark">
-           Contact: {{ users.contact }}
+            Contact: {{ users.contact }}
           </h2>
           <br />
           <div class="buttons d-flex">
-            <button class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger">Delete</button>
             <button
               type="button"
               class="btn btn-secondary float-start"
@@ -59,26 +61,23 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="updateProduct">
-            <ul>
-              <li>NAME</li>
-              <li><input v-model="name" required type="text" /></li>
-              <li>CONTACT</li>
-              <li><input v-model="contact" required type="text" /></li>
-              <li>EMAIL</li>
-              <li><input v-model="email" required type="email" /></li>
-            </ul>
+          <form @submit.prevent="createProduct">
+            <label>NAME:</label>
+            <input type="text" v-model="name" required />
+            <label>CONTACT:</label>
+            <input type="number" v-model="price" required />
+            <label>EMAIL:</label>
+            <input type="text" v-model="image" required />
+
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
+              <button type="submit" class="btn">
+                <i class="fa fa-bookmark fa-2x"></i>
               </button>
-              <button type="submit" class="btn btn-success">
-                Save changes
-              </button>
+              <div class="btn-2">
+                <button type="button" class="btn btn-2" data-bs-dismiss="modal">
+                  <i class="fa fa-times fa-2x"></i>
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -128,10 +127,41 @@ export default {
   object-fit: cover;
 }
 
+.btn-danger {
+  text-align: center;
+}
+
+.section_3 {
+  background: #c9cebd;
+  height: 100vh;
+}
+form {
+  text-align: left;
+  background: rgb(221, 200, 200);
+}
+input {
+  display: block;
+  padding: 10px 6px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  color: black;
+  background: #ddd;
+}
+.modal-content {
+  background-color: rgb(221, 200, 200);
+}
+
 h1 {
   text-align: center;
   margin: 1em auto;
   color: #344055;
+  padding-top: 50px;
+}
+
+.pt-3 {
+  padding-top: 200px !important;
 }
 
 .member {
