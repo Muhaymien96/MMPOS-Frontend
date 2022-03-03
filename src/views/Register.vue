@@ -59,7 +59,7 @@ export default {
       fetch("https://mmpos-group-api.herokuapp.com/users", {
         method: "POST",
         body: JSON.stringify({
-          name: this.name,
+          fullname: this.name,
           email: this.email,
           contact: this.contact,
           password: this.password,
@@ -72,7 +72,7 @@ export default {
         .then((json) => {
           alert("User registered");
           localStorage.setItem("jwt", json.jwt);
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "Login" });
         })
         .catch((err) => {
           alert(err);

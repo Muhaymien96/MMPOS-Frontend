@@ -36,6 +36,7 @@
             <div class="modal-header">
               <h5 class="modal-title" id="addModalLabel">Add Product</h5>
 
+<<<<<<< HEAD
               <button
                 type="button"
                 class="btn-close btn-danger"
@@ -56,6 +57,31 @@
                   <option value="Shoes">Shoes</option>
                   <option value="Dresses">Dresses</option>
                   <option value="Swimwear">Swimwear</option>
+=======
+            <button
+              type="button"
+              class="btn-close btn-danger"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="createProduct">
+              <ul>
+                <li>NAME</li>
+                <li><input v-model="title" required type="text" /></li>
+                <li>PRICE</li>
+                <li><input v-model="price" required type="number" /></li>
+                <li>DESCRIPTION</li>
+                <li><input v-model="description" type="text" /></li>
+                <li>IMG URL</li>
+                <li><input v-model="img" required type="text" /></li>
+                <label for="genre">CATEGORY: </label>
+                <select id="genre" v-model="category" name="genre">
+                  <option value="Shoes">Shoes</option>
+                  <option value="Accessories">Dresses</option>
+                  <option value="Clothing">Swimwear</option>
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
                 </select>
                 <div class="modal-footer">
                   <button type="submit" class="btn">
@@ -87,6 +113,7 @@
             <div class="modal-header">
               <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
 
+<<<<<<< HEAD
               <button
                 type="button"
                 class="btn-close btn-danger"
@@ -124,6 +151,48 @@
                 </div>
               </form>
             </div>
+=======
+            <button
+              type="button"
+              class="btn-close btn-danger"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="editProduct">
+              <ul>
+                <li>NAME</li>
+                <li><input v-model="title" type="text" /></li>
+                <li>PRICE</li>
+                <li><input v-model="price" type="number" /></li>
+                <li>DESCRIPTION</li>
+                <li><input v-model="description" type="text" /></li>
+                <li>IMAGE URL</li>
+                <li><input v-model="img" type="text" /></li>
+                <li>
+                  <label for="genre">CATEGORY: </label>
+                  <select id="genre" v-model="category" name="genre">
+                  <option value="Shoes">Shoes</option>
+                  <option value="Accessories">Dresses</option>
+                  <option value="Clothing">Swimwear</option>
+                </select>
+                </li>
+              </ul>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success">
+                  Save changes
+                </button>
+              </div>
+            </form>
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
           </div>
         </div>
       </div>
@@ -144,6 +213,7 @@
               <div class="desc text-dark">{{ product.description }}</div>
               <div class="category text-dark">{{ product.category }}</div>
               <div class="price text-dark">R {{ product.price }}</div>
+<<<<<<< HEAD
 
               <div class="cart d-flex">
                 <input
@@ -176,6 +246,20 @@
                 >
                   <i class="fas fa-trash fa-2x"></i>
                 </button>
+=======
+            
+               <div class="cart d-flex">
+            <input type="number" class="quantity" value=1 id="addToCart">
+            <button type="button" class="btn btn-mute ms-3" @click="addToCart(product._id)"><i class="fas fa-shopping-bag fa-2x"></i></button>
+           
+            <button type="button" class="btn btn-mute ms-3" data-bs-toggle="modal" data-bs-target="#editModal" >
+            <i class="fas fa-wrench fa-2x"></i>
+            </button>
+            <button type="button" class="btn btn-mute ms-3" @click="deleteProduct(id)" ><i class="fas fa-trash fa-2x"></i>
+            </button>
+      
+          </div>
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
               </div>
             </div>
           </div>
@@ -193,9 +277,16 @@ export default {
       products: null,
       title: "",
       description: "",
+<<<<<<< HEAD
       category: "",
       price: "",
       img: "",
+=======
+      category:"",
+      price:"",
+      img:"",
+      qty: 1
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
     };
   },
   // fetching product
@@ -245,7 +336,8 @@ export default {
       fetch("https://mmpos-group-api.herokuapp.com/products", {
         method: "POST",
         body: JSON.stringify({
-          name: this.name,
+          title: this.title,
+          description: this.description,
           category: this.category,
           price: this.price,
           img: this.img,
@@ -264,17 +356,50 @@ export default {
           alert(err);
         });
     },
+<<<<<<< HEAD
   },
+=======
+     addToCart(id){
+        fetch(`https://mmpos-group-api.herokuapp.com/users/${id}/cart`, {
+        method: "POST",
+        body: JSON.stringify({
+          qty: this.qty,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("Added to Cart");
+          this.$router.push({ name: "Products" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  }
+  
+   
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
 };
 </script>
 <style scoped>
 * {
   box-sizing: border-box;
 }
+<<<<<<< HEAD
 .modal-content {
   background-color: rgb(221, 200, 200);
 }
 .modal-body {
+=======
+ul{
+list-style: none;
+}
+.modal-body{
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
   z-index: 200;
 }
 .btn-2 {

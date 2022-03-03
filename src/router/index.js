@@ -8,7 +8,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/cart",
+    path: "/  cart",
     name: "Cart",
     component: Cart
   },

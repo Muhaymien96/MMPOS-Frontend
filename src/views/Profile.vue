@@ -2,6 +2,10 @@
   <section class="section_3">
     <h2 class="testimonial text-dark pt-3">User Profile</h2>
     <div class="container">
+<<<<<<< HEAD
+=======
+      <h2 class="testimonial text-dark pt-3">USER PROFILE</h2>
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
       <br /><br />
       <div class="row">
         <div class="member member-box col-md-4 col=sm-6 col-xs-12" v-if="users">
@@ -23,7 +27,11 @@
           </h2>
           <br />
           <div class="buttons d-flex">
+<<<<<<< HEAD
             <button type="button" class="btn btn-danger">Delete</button>
+=======
+            <button class="btn btn-danger" @click="deleteUser">Delete</button>
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
             <button
               type="button"
               class="btn btn-secondary float-start"
@@ -51,8 +59,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-          <p>(not working yet)</p>
-
           <button
             type="button"
             class="btn-close btn-danger"
@@ -61,6 +67,7 @@
           ></button>
         </div>
         <div class="modal-body">
+<<<<<<< HEAD
           <form @submit.prevent="createProduct">
             <label>NAME:</label>
             <input type="text" v-model="name" required />
@@ -72,6 +79,27 @@
             <div class="modal-footer">
               <button type="submit" class="btn">
                 <i class="fa fa-bookmark fa-2x"></i>
+=======
+          <form @submit.prevent="updateUser">
+            <div class="d-block">
+              NAME
+              <input v-model="name" type="text" /><br>
+              CONTACT
+              <input v-model="contact" type="text" /><br>
+              EMAIL
+              <input v-model="email" type="email" /><br>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn">
+                Save changes
+>>>>>>> ece800f066905dcf23123249af3e26bde7f0dd91
               </button>
               <div class="btn-2">
                 <button type="button" class="btn btn-2" data-bs-dismiss="modal">
@@ -117,6 +145,57 @@ export default {
         alert(err);
       });
   },
+  methods:{
+updateUser(){
+ if (!localStorage.getItem("jwt")) {
+        alert("User not logged in");
+        return this.$router.push({ name: "Login" });
+      }
+      fetch("https://mmpos-group-api.herokuapp.com/users/", {
+        method: "PUT",
+        body: JSON.stringify({
+          fullname: this.name,
+          email: this.email,
+          contact: this.contact
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("User Updated");
+          this.$router.push({ name: "Profile" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+  },
+  deleteUser(){
+            if (!localStorage.getItem("jwt")) {
+        alert("User not logged in");
+        return this.$router.push({ name: "Login" });
+      }
+      fetch('https://pos-colab.herokuapp.com/users', {
+      method: 'DELETE',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("DELETED USER")
+          localStorage.clear();
+        })
+        .catch((err) => {
+          alert(err);
+        });
+            },
+  }
+  
+  
 };
 </script>
 
