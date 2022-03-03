@@ -22,5 +22,18 @@
     "@vue/compiler-sfc": "^3.0.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2"
-  }
+  },
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muhaymien96/MMPOS-Frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Muhaymien96/MMPOS-Frontend/issues"
+  },
+  "homepage": "https://github.com/Muhaymien96/MMPOS-Frontend#readme"
 }

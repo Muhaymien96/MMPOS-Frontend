@@ -1,33 +1,150 @@
 <template>
    <section class="section_proj">
     <div class="container">
-      
-      <header class="buttons">
-        <!-- go to cart -->
-        <a href="/cart" id="cart"><svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
-  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
-</svg></a>
+  
+     <div class="row"><div class="col"><h2 class="head d-flex float-end text-dark my-5">PRODUCTS</h2></div>
+     <div class="col"> <!-- go to cart -->
+        <a href="/cart" id="cart"><i class="fas fa-shopping-bag fa-2x my-5 float-end"></i></a>
   <!-- Button trigger modal for add product -->
               <a
-                class="nav-link"
+                id="addproduct"
                 style="cursor: pointer"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#addModal"
               >
-                Add a product
-              </a>
-</header>
+               <i class="fas fa-plus fa-2x my-5 float-end me-4"></i>
+              </a></div>
+       
+        
+       </div>
+      
+
       
 
 <!-- modals -->
+<!-- Add product modal -->
+<div
+      class="modal fade"
+      id="addModal"
+      tabindex="-1"
+      aria-labelledby="addModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addModalLabel">Add Product</h5>
 
-<!-- product display -->
-      <h2 class="head d-flex justify-content-center text-dark my-5">PRODUCTS</h2>
+            <button
+              type="button"
+              class="btn-close btn-danger"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="createProduct">
+              <ul>
+                <li>NAME</li>
+                <li><input v-model="name" required type="text" /></li>
+                <li>PRICE</li>
+                <li><input v-model="price" required type="number" /></li>
+                <li>IMAGE URL</li>
+                <li><input v-model="img" required type="text" /></li>
+                <label for="genre">CATEGORY:</label>
+                <select id="genre" v-model="category" name="genre">
+                  <option value="Shoes">Shoes</option>
+                  <option value="Accessories">Accessories</option>
+                  <option value="Clothing">Clothing</option>
+                </select>
+              </ul>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for edit  product -->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="editModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+
+            <button
+              type="button"
+              class="btn-close btn-danger"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="editProduct">
+              <ul>
+                <li>NAME</li>
+                <li><input v-model="name" required type="text" /></li>
+                <li>PRICE</li>
+                <li><input v-model="price" required type="number" /></li>
+                <li>IMAGE URL</li>
+                <li><input v-model="img" required type="text" /></li>
+                <li>
+                  Shoes<input
+                    v-model="category"
+                    style="margin: 10px"
+                    type="radio"
+                  />Accessories<input
+                    v-model="category"
+                    style="margin: 10px"
+                    type="radio"
+                  />Clothing<input
+                    v-model="category"
+                    style="margin: 10px"
+                    type="radio"
+                  />
+                </li>
+              </ul>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- get all products -->
+      
       <div class="row">
         <div
           class="card col-md-4 col-sm-6 col-xs-12"
           v-for="product in products"
-          :key="product.id"
+          :key="product._id"
         >
           <div class="imgBx">
             <img
@@ -41,10 +158,17 @@
               <div class="desc text-dark">{{ product.description }}</div>
               <div class="category text-dark">{{ product.category }}</div>
               <div class="price text-dark">R {{ product.price }}</div>
-             <br>
+            
                <div class="cart d-flex">
-            <input type="number" class="form-control" value=1 min=1 id="addToCart${position}">
-            <button type="button" class="btn btn-mute ms-3" onclick="addToCart(${position})"><i class="fas fa-shopping-bag fa-1x"></i></button>
+            <input type="number" class="quantity" value=1 min=1 id="addToCart">
+            <button type="button" class="btn btn-mute ms-3" onclick="addToCart()"><i class="fas fa-shopping-bag fa-2x"></i></button>
+           
+            <button type="button" class="btn btn-mute ms-3" data-bs-toggle="modal" data-bs-target="#editModal" >
+            <i class="fas fa-wrench fa-2x"></i>
+            </button>
+            <button type="button" class="btn btn-mute ms-3" onclick="deleteProduct(${position})" ><i class="fas fa-trash fa-2x"></i>
+            </button>
+      
           </div>
               </div>
             </div>
@@ -141,6 +265,15 @@ export default {
 * {
   box-sizing: border-box;
 }
+.modal-body{
+  z-index: 200;
+}
+.quantity{
+width: 40px;
+height: 35px;
+margin-top: 6px !important;
+border-radius: 5px;
+}
 .head{
   letter-spacing: 6px;
   text-align: center;
@@ -160,6 +293,10 @@ export default {
 }
 
 
+.fas:hover{
+color: #f4978e !important;
+
+}
 .container .card {
   /* position: relative; */
  margin-right: 40px !important;
@@ -205,7 +342,7 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10000;
+  z-index: 100;
   width: 100%;
   height: 220px;
   transition: 0.5s;
@@ -216,9 +353,7 @@ export default {
   top: 0%;
   transform: translateY(0%);
 }
-.cart{
-  top: -50% !important;
-}
+
 
 .container .card .imgBx img {
   position: absolute;
@@ -331,11 +466,16 @@ transition-delay: 0.4s;
   transition-delay: 0.3s;
 }
 
-#cart {
+/* #cart {
   float: right;
   margin-top: 30px;
   margin-right: -50px;
 }
+#addproduct{
+   float: right;
+  margin-top: 30px;
+  margin-right: -20px;
+} */
 @media (max-width: 500px){
   .section_proj {
  width: 112%;

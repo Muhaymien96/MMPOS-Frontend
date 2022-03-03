@@ -1,89 +1,176 @@
 <template>
-  <h1 class="mt-4">User Profile</h1>
-<div class="Profile">
-  <div class="row">
-    <h4 class="mb-4">User Information</h4>
-    <div class="col-sm-6">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#f8ad9d" class="bi bi-person-square my-2" viewBox="0 0 16 16">
-  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
-</svg>
+  <section class="section_3">
+    <div class="container">
+      <h2 class="testimonial text-dark pt-3">User Profile</h2>
+      <br /><br />
+      <div class="row">
+        <div class="member member-box col-md-4 col=sm-6 col-xs-12" v-if="users">
+          <img
+            class="img-member member-box"
+            src="https://i.ibb.co/ZTGw6QB/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
+          />
+          <br />
+          <h2 class="name-member name mt-2 text-dark">Name: {{ users.fullname }}</h2>
+          <br />
+          <h2 class="expertise-member expertise text-dark">
+            Email: {{ users.email }}
+          </h2>
+          <br />
+          <h2 class="expertise-member expertise text-dark">
+           Contact: {{ users.contact }}
+          </h2>
+          <br />
+          <div class="buttons d-flex">
+            <button class="btn btn-danger">Delete</button>
+            <button
+              type="button"
+              class="btn btn-secondary float-start"
+              style="margin: 10px"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal1"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-6">
-      <p class="text-dark">Name : {{name}}</p>
-      <p class="text-dark">Email : {{email}}</p>
-      <p class="text-dark">Contact Number : {{contact}}</p>
-      <!-- <p class="text-dark">Password : {{password}}</p> -->
+  </section>
+
+  <!-- Modal for edit  profile -->
+  <div
+    class="modal fade"
+    id="exampleModal1"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+          <p>(not working yet)</p>
+
+          <button
+            type="button"
+            class="btn-close btn-danger"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="updateProduct">
+            <ul>
+              <li>NAME</li>
+              <li><input v-model="name" required type="text" /></li>
+              <li>CONTACT</li>
+              <li><input v-model="contact" required type="text" /></li>
+              <li>EMAIL</li>
+              <li><input v-model="email" required type="email" /></li>
+            </ul>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-success">
+                Save changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-  <a href="/products" class="back-to-shop btn btn my-5">Back To Shopping</a>
-
 </template>
-
 <script>
 export default {
+  components: {},
   data() {
     return {
+      users: null,
       name: "",
-       email: "",
-       contact: "",
-      //  password: "",
+      contact: "",
+      email: "",
     };
   },
-   methods: {
-    register() {
-      fetch("https://mmpos-group-api.herokuapp.com/users/" + this.$route.params.id, {
-        method: "GET",
-        body: JSON.stringify({
-          name: this.fullname,
-          email: this.email,
-          contact: this.contact,
-          // password: this.password,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+  mounted() {
+    if (!localStorage.getItem("jwt")) {
+      alert("User not logged in");
+      return this.$router.push({ name: "Login" });
+    }
+    fetch("https://mmpos-group-api.herokuapp.com/users/single-user/", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        this.users = json;
       })
-        .then((response) => response.json())
-        .then((json) => {
-          alert("User Data Retrieved");
-          localStorage.setItem("jwt", json.jwt);
-        })
-        .catch((err) => {
-          alert(err);
-        });
-    },
+      .catch((err) => {
+        alert(err);
+      });
   },
 };
-
 </script>
 
 <style scoped>
-.Profile {
+.img-member.member-box {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+}
+
+h1 {
+  text-align: center;
+  margin: 1em auto;
+  color: #344055;
+}
+
+.member {
+  margin-top: 70px !important;
+  background-image: linear-gradient(
+    to top,
+    rgba(236, 234, 235, 0.79) 0%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+  background: #9f9f9f;
+  width: 500px;
+  height: 380px;
+  border-radius: 7px;
+  margin: auto;
+  margin-bottom: 50px;
+  text-align: center;
+  padding: 20px 10px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.member .img-member {
+  border-radius: 50%;
+  margin-top: -80px;
   border: 1px solid black;
-  border-radius: 10px;
-  width: 60%;
-  margin-top: 50px;
-  margin-inline: auto;
-  padding: 40px;
+  background-color: lightgray;
 }
 
-.col-sm-6 p{
-  text-align: initial;
-  border-bottom: 1px solid #000;
-  width: 75%;
+.member .name-member {
+  color: #344055;
+  margin: 7px 0 7px 0;
 }
 
-.back-to-shop {
-  text-decoration: none;
-  background: #f8ad9d;
-  padding: 10px;
-  border-radius: 5px;
+.member .expertise-member {
+  color: #888098;
+  margin-top: 0;
+  margin: 7px 0 7px 0;
+  font-size: 20px;
+  font-weight: 500;
 }
-
-.back-to-shop:hover {
-  background: #f4978e;
-}
-
 </style>
