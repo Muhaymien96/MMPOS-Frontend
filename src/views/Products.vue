@@ -138,6 +138,7 @@
 <!-- get all products -->
       
       <div class="row">
+        <input type="text" v-model="search">
         <div
           class="card col-md-4 col-sm-6 col-xs-12"
           v-for="product in products"
@@ -186,7 +187,8 @@ export default {
       category:"",
       price:"",
       img:"",
-      qty: 1
+      qty: 1,
+      search:""
     };
   },
   // fetching product
@@ -275,6 +277,9 @@ export default {
         .catch((err) => {
           alert(err);
         });
+    },
+    computed:{
+      filterProducts
     }
   }
   

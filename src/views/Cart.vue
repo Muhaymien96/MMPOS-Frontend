@@ -7,7 +7,7 @@
         <!--1-->
         <div class="cartItem row align-items-start" v-for="carts of cart" :key="carts._id">
           <div class="col-3 mb-2">
-            <img class="w-100" src="carts.img" alt="art image">
+            <img class="w-100" :src="carts.img" alt="art image">
           </div>
           <div class="col-5 mb-2">
             <h6 class=""></h6>
