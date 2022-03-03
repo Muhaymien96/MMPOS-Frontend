@@ -2,7 +2,6 @@
   <section class="section_3">
     <div class="container">
       <h2 class="testimonial text-dark pt-3">USER PROFILE</h2>
-      <br /><br />
       <div class="row">
         <div class="member member-box col-md-4 col=sm-6 col-xs-12" v-if="users">
           <img
@@ -10,14 +9,16 @@
             src="https://i.ibb.co/ZTGw6QB/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
           />
           <br />
-          <h2 class="name-member name mt-2 text-dark">Name: {{ users.fullname }}</h2>
+          <h2 class="name-member name mt-2 text-dark">
+            Name: {{ users.fullname }}
+          </h2>
           <br />
           <h2 class="expertise-member expertise text-dark">
             Email: {{ users.email }}
           </h2>
           <br />
           <h2 class="expertise-member expertise text-dark">
-           Contact: {{ users.contact }}
+            Contact: {{ users.contact }}
           </h2>
           <br />
           <div class="buttons d-flex">
@@ -60,23 +61,17 @@
           <form @submit.prevent="updateUser">
             <div class="d-block">
               NAME
-              <input v-model="name" type="text" /><br>
+              <input v-model="name" type="text" /><br />
               CONTACT
-              <input v-model="contact" type="text" /><br>
+              <input v-model="contact" type="text" /><br />
               EMAIL
-              <input v-model="email" type="email" /><br>
+              <input v-model="email" type="email" /><br />
             </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" class="btn close" data-bs-dismiss="modal">
                 Close
               </button>
-              <button type="submit" class="btn">
-                Save changes
-              </button>
+              <button type="submit" class="btn save">Save changes</button>
             </div>
           </form>
         </div>
@@ -116,9 +111,9 @@ export default {
         alert(err);
       });
   },
-  methods:{
-updateUser(){
- if (!localStorage.getItem("jwt")) {
+  methods: {
+    updateUser() {
+      if (!localStorage.getItem("jwt")) {
         alert("User not logged in");
         return this.$router.push({ name: "Login" });
       }
@@ -127,7 +122,7 @@ updateUser(){
         body: JSON.stringify({
           fullname: this.name,
           email: this.email,
-          contact: this.contact
+          contact: this.contact,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -142,14 +137,14 @@ updateUser(){
         .catch((err) => {
           alert(err);
         });
-  },
-  deleteUser(){
-            if (!localStorage.getItem("jwt")) {
+    },
+    deleteUser() {
+      if (!localStorage.getItem("jwt")) {
         alert("User not logged in");
         return this.$router.push({ name: "Login" });
       }
-      fetch('https://pos-colab.herokuapp.com/users', {
-      method: 'DELETE',
+      fetch("https://mmpos-group-api.herokuapp.com/users", {
+        method: "DELETE",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -157,16 +152,14 @@ updateUser(){
       })
         .then((response) => response.json())
         .then((json) => {
-          alert("DELETED USER")
+          alert("DELETED USER");
           localStorage.clear();
         })
         .catch((err) => {
           alert(err);
         });
-            },
-  }
-  
-  
+    },
+  },
 };
 </script>
 
@@ -177,10 +170,29 @@ updateUser(){
   object-fit: cover;
 }
 
-h1 {
-  text-align: center;
-  margin: 1em auto;
-  color: #344055;
+.section_3 {
+  background: #c9cebd;
+  height: 100vh;
+}
+form {
+  text-align: left;
+  background: rgb(221, 200, 200);
+}
+.save {
+  padding-left: 100px !important;
+}
+input {
+  display: block;
+  padding: 10px 6px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  color: black;
+  background: #ddd;
+}
+.modal-content {
+  background-color: rgb(221, 200, 200);
 }
 
 .member {
