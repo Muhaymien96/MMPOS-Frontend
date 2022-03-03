@@ -46,16 +46,18 @@
             <form @submit.prevent="createProduct">
               <ul>
                 <li>NAME</li>
-                <li><input v-model="name" required type="text" /></li>
+                <li><input v-model="title" required type="text" /></li>
                 <li>PRICE</li>
                 <li><input v-model="price" required type="number" /></li>
-                <li>IMAGE URL</li>
+                <li>DESCRIPTION</li>
+                <li><input v-model="description" type="text" /></li>
+                <li>IMG URL</li>
                 <li><input v-model="img" required type="text" /></li>
-                <label for="genre">CATEGORY:</label>
+                <label for="genre">CATEGORY: </label>
                 <select id="genre" v-model="category" name="genre">
                   <option value="Shoes">Shoes</option>
-                  <option value="Accessories">Accessories</option>
-                  <option value="Clothing">Clothing</option>
+                  <option value="Accessories">Dresses</option>
+                  <option value="Clothing">Swimwear</option>
                 </select>
               </ul>
 
@@ -100,25 +102,20 @@
             <form @submit.prevent="editProduct">
               <ul>
                 <li>NAME</li>
-                <li><input v-model="name" required type="text" /></li>
+                <li><input v-model="title" type="text" /></li>
                 <li>PRICE</li>
-                <li><input v-model="price" required type="number" /></li>
+                <li><input v-model="price" type="number" /></li>
+                <li>DESCRIPTION</li>
+                <li><input v-model="description" type="text" /></li>
                 <li>IMAGE URL</li>
-                <li><input v-model="img" required type="text" /></li>
+                <li><input v-model="img" type="text" /></li>
                 <li>
-                  Shoes<input
-                    v-model="category"
-                    style="margin: 10px"
-                    type="radio"
-                  />Accessories<input
-                    v-model="category"
-                    style="margin: 10px"
-                    type="radio"
-                  />Clothing<input
-                    v-model="category"
-                    style="margin: 10px"
-                    type="radio"
-                  />
+                  <label for="genre">CATEGORY: </label>
+                  <select id="genre" v-model="category" name="genre">
+                  <option value="Shoes">Shoes</option>
+                  <option value="Accessories">Dresses</option>
+                  <option value="Clothing">Swimwear</option>
+                </select>
                 </li>
               </ul>
               <div class="modal-footer">
@@ -160,13 +157,13 @@
               <div class="price text-dark">R {{ product.price }}</div>
             
                <div class="cart d-flex">
-            <input type="number" class="quantity" value=1 min=1 id="addToCart">
-            <button type="button" class="btn btn-mute ms-3" onclick="addToCart()"><i class="fas fa-shopping-bag fa-2x"></i></button>
+            <input type="number" class="quantity" value=1 id="addToCart">
+            <button type="button" class="btn btn-mute ms-3" @click="addToCart(product._id)"><i class="fas fa-shopping-bag fa-2x"></i></button>
            
             <button type="button" class="btn btn-mute ms-3" data-bs-toggle="modal" data-bs-target="#editModal" >
             <i class="fas fa-wrench fa-2x"></i>
             </button>
-            <button type="button" class="btn btn-mute ms-3" onclick="deleteProduct(${position})" ><i class="fas fa-trash fa-2x"></i>
+            <button type="button" class="btn btn-mute ms-3" @click="deleteProduct(id)" ><i class="fas fa-trash fa-2x"></i>
             </button>
       
           </div>
@@ -188,7 +185,8 @@ export default {
       description: "",
       category:"",
       price:"",
-      img:""
+      img:"",
+      qty: 1
     };
   },
   // fetching product
@@ -238,7 +236,8 @@ export default {
       fetch("https://mmpos-group-api.herokuapp.com/products", {
         method: "POST",
         body: JSON.stringify({
-          name: this.name,
+          title: this.title,
+          description: this.description,
           category: this.category,
           price: this.price,
           img: this.img,
@@ -257,13 +256,37 @@ export default {
           alert(err);
         });
     },
+     addToCart(id){
+        fetch(`https://mmpos-group-api.herokuapp.com/users/${id}/cart`, {
+        method: "POST",
+        body: JSON.stringify({
+          qty: this.qty,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("Added to Cart");
+          this.$router.push({ name: "Products" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   }
+  
    
 };
 </script>
 <style scoped>
 * {
   box-sizing: border-box;
+}
+ul{
+list-style: none;
 }
 .modal-body{
   z-index: 200;

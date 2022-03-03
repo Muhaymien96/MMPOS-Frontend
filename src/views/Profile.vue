@@ -1,7 +1,7 @@
 <template>
   <section class="section_3">
     <div class="container">
-      <h2 class="testimonial text-dark pt-3">User Profile</h2>
+      <h2 class="testimonial text-dark pt-3">USER PROFILE</h2>
       <br /><br />
       <div class="row">
         <div class="member member-box col-md-4 col=sm-6 col-xs-12" v-if="users">
@@ -21,7 +21,7 @@
           </h2>
           <br />
           <div class="buttons d-flex">
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-danger" @click="deleteUser">Delete</button>
             <button
               type="button"
               class="btn btn-secondary float-start"
@@ -49,8 +49,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-          <p>(not working yet)</p>
-
           <button
             type="button"
             class="btn-close btn-danger"
@@ -59,15 +57,15 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="updateProduct">
-            <ul>
-              <li>NAME</li>
-              <li><input v-model="name" required type="text" /></li>
-              <li>CONTACT</li>
-              <li><input v-model="contact" required type="text" /></li>
-              <li>EMAIL</li>
-              <li><input v-model="email" required type="email" /></li>
-            </ul>
+          <form @submit.prevent="updateUser">
+            <div class="d-block">
+              NAME
+              <input v-model="name" type="text" /><br>
+              CONTACT
+              <input v-model="contact" type="text" /><br>
+              EMAIL
+              <input v-model="email" type="email" /><br>
+            </div>
             <div class="modal-footer">
               <button
                 type="button"
@@ -76,7 +74,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-success">
+              <button type="submit" class="btn">
                 Save changes
               </button>
             </div>
@@ -118,6 +116,57 @@ export default {
         alert(err);
       });
   },
+  methods:{
+updateUser(){
+ if (!localStorage.getItem("jwt")) {
+        alert("User not logged in");
+        return this.$router.push({ name: "Login" });
+      }
+      fetch("https://mmpos-group-api.herokuapp.com/users/", {
+        method: "PUT",
+        body: JSON.stringify({
+          fullname: this.name,
+          email: this.email,
+          contact: this.contact
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("User Updated");
+          this.$router.push({ name: "Profile" });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+  },
+  deleteUser(){
+            if (!localStorage.getItem("jwt")) {
+        alert("User not logged in");
+        return this.$router.push({ name: "Login" });
+      }
+      fetch('https://pos-colab.herokuapp.com/users', {
+      method: 'DELETE',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          alert("DELETED USER")
+          localStorage.clear();
+        })
+        .catch((err) => {
+          alert(err);
+        });
+            },
+  }
+  
+  
 };
 </script>
 
